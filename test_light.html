@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Presentation</title>
+    <style>
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .presentation-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .presentation-header {
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .presentation-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .author {
+            font-style: italic;
+            opacity: 0.8;
+        }
+        
+        .slides-container {
+            flex: 1;
+            padding: 2rem;
+        }
+        
+        .slide {
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background: var(--slide-bg);
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        
+        .slide-number {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 0.875rem;
+            opacity: 0.6;
+        }
+        
+        .slide h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--heading-color);
+        }
+        
+        .slide h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--subheading-color);
+        }
+        
+        .slide p {
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+        
+        .slide img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+        
+        .image-text-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .bullet-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .bullet-list li {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+        
+        .bullet-list li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .quote-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+        }
+        
+        .quote {
+            font-size: 1.75rem;
+            font-style: italic;
+            color: var(--quote-color);
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding: 0 3rem;
+        }
+        
+        .quote:before,
+        .quote:after {
+            position: absolute;
+            font-size: 3rem;
+            color: var(--accent-color);
+            opacity: 0.3;
+        }
+        
+        .quote:before {
+            content: "\201C";
+            left: 0;
+            top: -1rem;
+        }
+        
+        .quote:after {
+            content: "\201D";
+            right: 0;
+            bottom: -2rem;
+        }
+        
+        .quote-author {
+            font-size: 1.125rem;
+            color: var(--subheading-color);
+        }
+        
+        .full-image-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+        
+        .full-image-container img {
+            max-height: 500px;
+            object-fit: contain;
+        }
+        
+        .image-caption {
+            margin-top: 1rem;
+            font-style: italic;
+            color: var(--subheading-color);
+            text-align: center;
+        }
+        
+        .title-slide {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .title-slide h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .title-slide h3 {
+            font-size: 1.75rem;
+            opacity: 0.9;
+        }
+        
+        .error-slide {
+            background: #fee;
+            border: 2px solid #fcc;
+            color: #c00;
+        }
+        
+        .presentation-footer {
+            padding: 2rem;
+            text-align: center;
+            border-top: 2px solid var(--border-color);
+            opacity: 0.7;
+        }
+        
+        @media (max-width: 768px) {
+            .slide {
+                padding: 2rem;
+                min-height: 400px;
+            }
+            
+            .two-column,
+            .image-text-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .slide h2 {
+                font-size: 1.5rem;
+            }
+            
+            .title-slide h2 {
+                font-size: 2rem;
+            }
+            
+            .quote {
+                font-size: 1.25rem;
+            }
+        }
+        
+        
+            :root {
+                --bg-color: #f5f5f5;
+                --text-color: #333333;
+                --heading-color: #000000;
+                --subheading-color: #666666;
+                --slide-bg: #ffffff;
+                --border-color: #e0e0e0;
+                --accent-color: #0066cc;
+                --quote-color: #555555;
+            }
+            
+            body {
+                background: var(--bg-color);
+                color: var(--text-color);
+            }
+            
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <header class="presentation-header">
+            <h1>Test Presentation</h1>
+            <p class="author">by Test System</p>
+        </header>
+        <main class="slides-container">
+            
+        <div class="slide title-slide">
+            <span class="slide-number">Slide 1</span>
+            <h2>Welcome to the Test</h2>
+            <h3>HTML Rendering Demo</h3>
+            <p>This is a test of the rendering system</p>
+        </div>
+        
+        <div class="slide">
+            <span class="slide-number">Slide 2</span>
+            <h2>Two Column Test</h2>
+            <div class="two-column">
+                <div class="column-left">
+                    <h3>Left Side</h3>
+<p>This is the left column with:</p>
+<li>Item 1</li>
+<li>Item 2</li>
+                </div>
+                <div class="column-right">
+                    <h3>Right Side</h3>
+<p>This is the right column with:</p>
+<li>Item A</li>
+<li>Item B</li>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slide">
+            <span class="slide-number">Slide 3</span>
+            <h2>Key Features</h2>
+            <p>The system supports:</p>
+            <ul class="bullet-list">
+                <li>Pure HTML/CSS generation</li>
+<li>Responsive design</li>
+<li>Multiple themes</li>
+<li>Six layout types</li>
+            </ul>
+        </div>
+        
+        <div class="slide">
+            <span class="slide-number">Slide 4</span>
+            <div class="quote-container">
+                <blockquote class="quote">
+                    Simplicity is the ultimate sophistication.
+                </blockquote>
+                <p class="quote-author">— Leonardo da Vinci</p>
+            </div>
+        </div>
+        
+        </main>
+        <footer class="presentation-footer">
+            <p>Generated with HTML Renderer</p>
+        </footer>
+    </div>
+</body>
+</html>
